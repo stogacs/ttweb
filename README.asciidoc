@@ -32,7 +32,6 @@ With a TeX installation:
 
 [source,shell]
 ----
-Rscript -e "renv::hydrate()"
 tlmgr install $(cat packages) # if missing any required packages
 latexmk                       # or: make index
 ----
@@ -55,8 +54,9 @@ With a TeX installation:
 
 [source,shell]
 ----
-Rscript -e "renv::hydrate()"
-# install any missing packages specified in packages.txt
+# install any missing packages specified in packages.txt using your TeX installation's
+# package manager
+
 latexmk                       # or: make index
 ----
 
