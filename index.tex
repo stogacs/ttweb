@@ -1,0 +1,36 @@
+% -----------------------------------------------
+% Prelude
+\documentclass[xcolor={dvipsnames},xtable]{beamer}
+\usetheme{metropolis}
+
+\input{include/preamble.tex}
+\input{include/knitr.tex}
+
+\addbibresource{references.bib}
+
+% -----------------------------------------------
+% Title
+\title{Tiny Tiny Web API}
+\subtitle{Let's make a tiny web API with Flask}
+\date{\today}
+\author{Eric Zhao}
+
+% -----------------------------------------------
+% Core
+\begin{document}
+
+\input{include/shared.tex}
+\newcommand{\sectiontitle}{}
+\newcommand{\currenttitle}{}
+
+\maketitle
+
+\newcommand{\subdir}{sections}
+\subfile{sections/00-intro.tex}
+
+% \renewcommand{\sectiontitle}{References}
+% \begin{frame}[allowframebreaks]{\sectiontitle}
+  % \printbibliography[heading=none]
+% \end{frame}
+
+\end{document}
