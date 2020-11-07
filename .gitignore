@@ -1,6 +1,5 @@
 # TeX installation directory
 /local
-*/renv
 
 # Knitted files
 *.Rnw_tex

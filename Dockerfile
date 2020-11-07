@@ -2,7 +2,6 @@ FROM alpine:3.12 AS build
 ARG CACHEBUST=1
 
 RUN apk update
-RUN apk add R R-dev
 RUN apk add perl
 RUN apk add texlive texlive-luatex
 RUN apk add texmf-dist-full

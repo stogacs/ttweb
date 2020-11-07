@@ -9,7 +9,6 @@ Requirements for main document (if not using Docker)
 * Python 3.6+
 ** Alternatively, a TeX installation (see link:packages.txt[`packages.txt`]
    for list of extra required packages)
-* R 4.0+
 
 Other targets (see Makefile for details):
 
