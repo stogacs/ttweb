@@ -9,7 +9,7 @@ database = {'names': []}
 
 
 def run():
-    app.run()
+    app.run(debug=True)
 
 
 @app.route('/')

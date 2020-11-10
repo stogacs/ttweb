@@ -131,7 +131,7 @@ app.run()
 %- Let's go to 127.0.0.1:5000/jsonify/John.
 %- We should get back in the body of the response a JSON object with the property name set
 %- to John.
-  \codelisting{2}{2}
+  \codelisting{3}{3}
   \codelisting{30}{35}
 \end{frame}
 
@@ -140,7 +140,7 @@ app.run()
 %- We can also use the 'jsonify' function to return a response with JSON from a dictionary.
 %- This does pretty much the same thing as the last endpoint we created, except the property
 %- is called 'string' instead of 'name'.
-  \codelisting{3}{3}
+  \codelisting{2}{2}
   \codelisting{38}{41}
 \end{frame}
 
@@ -168,8 +168,8 @@ app.run()
   An endpoint that modifies persistent data: \\
   \vspace*{1em}
 
-  \codelisting[basicstyle=\normalsize]{8}{8}
-  \codelisting[basicstyle=\normalsize]{44}{47}
+  \codelisting[basicstyle=\ttfamily\normalsize]{8}{8}
+  \codelisting[basicstyle=\ttfamily\normalsize]{44}{47}
 \end{frame}
 
 %- ---------------------------
@@ -180,11 +180,45 @@ app.run()
 %-
 %- Let's go back to our browser and request this GET endpoint.
 %- We should get back an empty array, because we haven't stored any names yet.
+%-
+%- Now, let's make a POST request to /create/John.
+%- Since the browser only makes a GET request to the url when you access it via the address
+%- bar, we'll need to do this some other way.
+%-
+%- Let's just make it easy and go into the console tools.
   Retrieving the persistent data: \\
   \vspace*{1em}
 
-  \codelisting[basicstyle=\large]{50}{52}
+  \codelisting[basicstyle=\ttfamily\large]{50}{52}
 \end{frame}
+
+%- ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+%- Copy the following code into your console and press enter.
+%- This'll make a POST request to our endpoint and print the response body.
+%-
+%- Then reload the page to make a GET request again and see the updated list of names.
+  To make the POST request: \\
+  \vspace*{1em}
+
+  \begin{lstlisting}[language=ES6,basicstyle=\ttfamily\normalsize]
+fetch("http://127.0.0.1:5000/create/John",
+      { method: "POST" })
+  .then(r => r.json())
+  .then(json => console.log(json));
+  \end{lstlisting}
+\end{frame}
+
+%- ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+%- With flask, we can also define a custom handler for 404.
+%-
+%- Now if we go to an invalid endpoint, it'll give us a response with code 404 and the body
+%- 'Page not found!'.
+  A custom \texttt{404} handler:
+  \codelisting{55}{57}
+\end{frame}
+
 
 % -----------------------------------------------
 
