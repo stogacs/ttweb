@@ -1,0 +1,191 @@
+% -----------------------------------------------
+% chktex-file 44
+\documentclass[../index.tex]{subfiles}
+
+% -----------------------------------------------
+
+\begin{document}
+
+%- -----------------------------------------------
+\renewcommand{\sectiontitle}{Let's code!}
+\section{\sectiontitle}
+%- I hope none of that was terribly confusing.
+%- Please, if you have any questions---ask them!
+%-
+%- Let's move on to actually make a tiny web API to see some of the concepts we just went
+%- over in action.
+%- This is the server component.
+%-
+%- We'll be using Python and a library called flask.
+%- If you don't know Python, I'm sorry. Java's lack of real built-in dependency management
+%- would make this take forever.
+%- We'd have to download and install something like Java Spark, and I'd rather not spend
+%- half an hour fixing a gazillion classpath issues.
+%- Hopefully you can still follow along even if you don't have Python installed.
+
+%- ---------------------------
+\renewcommand{\currenttitle}{Installing \texttt{flask}}
+\begin{frame}{\currenttitle}
+%- Well, we'll first need to install flask.
+%- You should probably have pip installed, so we'll just have to pop into the terminal and
+%- run `pip install flask`.
+%- Let me know if anyone has any problems with this.
+  \Large
+  \texttt{pip install flask}
+  \normalsize
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{Create a flask app}
+\begin{frame}{\currenttitle}
+%- Now, let's create a new Python file called app.py.
+%- We'll import flask and create a new app.
+  \codelisting{1}{1}
+  \codelisting{5}{5}
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{Running it}
+\begin{frame}[fragile]{\currenttitle}
+%- Now let's just run the application.
+%- We haven't set up any endpoints yet, so this won't really do anything.
+%-
+%- When we run this, it'll spin up a web server that we can make requests to.
+%- But there aren't any valid endpoints yet.
+%-
+%- Let's go to 127.0.0.1:5000, the address of the server, and see what happens.
+%- It should return a 404 status code, indicating that the endpoint we're
+%- accessing isn't found.
+%-
+%- When we go to an endpoint in the browser like this, the browser has to make
+%- an HTTP request to the server to get the page.
+%- When requesting a page like this, it only makes GET request.
+%- So we just made a GET request, but this endpoint doesn't exist, so we got a
+%- 404 response.
+  \begin{lstlisting}
+app.run()
+  \end{lstlisting}
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{First endpoint}
+\begin{frame}[fragile]{\currenttitle}
+%- Let's add our first endpoint.
+%- We do this by creating a function that returns something that will be our
+%- response.
+%-
+%- We use a decorator 'route' and pass in the path of the endpoint.
+%- Here, we're defining the GET endpoint 127.0.0.1:5000/, so we pass in '/'.
+%-
+%- So when the client makes a GET request to this url, our server will return
+%- an response with a body that is just the string 'Tiny Tiny Web API'.
+%-
+%- Let's go back into the browser and reload the page.
+%- The page should now show that string.
+  Make an endpoint for \texttt{\urlendpoint{}}:
+  \vspace*{1em}
+  \codelisting{15}{17}
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{Another GET endpoint}
+\begin{frame}[fragile]{\currenttitle}
+%- Let's add another GET endpoint, except at the path '/hello'.
+%- This creates the endpoint 127.0.0.1:5000/hello.
+%- We'll return the string 'Hello World!'.
+%-
+%- Now, let's go back into the browser and enter that url.
+%- We should see the string 'Hello World!'.
+  Make an endpoint for \texttt{\urlendpoint{hello}}:
+  \vspace*{1em}
+  \codelisting{20}{22}
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{Dynamic endpoint path}
+\begin{frame}[fragile]{\currenttitle}
+%- We can also make a dynamic endpoint that does something based
+%- on the path.
+%-
+%- Let's define the endpoint /hello/<name>, where name can be pretty much anything.
+%-
+%- So if we go to 127.0.0.1:5000/hello/John, we should get back 'Hello John!'.
+  Make an endpoint for \texttt{\urlendpoint{hello/<name>}}:
+  \vspace*{1em}
+  \codelisting{25}{27}
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{Returning JSON}
+\begin{frame}[fragile]{\currenttitle}
+%- More often then not, when creating real APIs, you're going to be returning JSON data in
+%- the response body.
+%-
+%- In flask, we can use the 'make_response' function to create and return a response with
+%- headers and other data.
+%- We create a response object and set the body to the string variable data.
+%- Notice we also have to set something called the mimetype, which explicitly tells the client
+%- the format of our response body.
+%- In this case, we make it clear that we're returning JSON.
+%-
+%- Let's go to 127.0.0.1:5000/jsonify/John.
+%- We should get back in the body of the response a JSON object with the property name set
+%- to John.
+  \codelisting{2}{2}
+  \codelisting{30}{35}
+\end{frame}
+
+%- ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+%- We can also use the 'jsonify' function to return a response with JSON from a dictionary.
+%- This does pretty much the same thing as the last endpoint we created, except the property
+%- is called 'string' instead of 'name'.
+  \codelisting{3}{3}
+  \codelisting{38}{41}
+\end{frame}
+
+%- ---------------------------
+\renewcommand{\currenttitle}{POST endpoint}
+\begin{frame}[fragile]{\currenttitle}
+%- All the endpoints we've made up to this point have been GET requests.
+%- If we try to use POST or PUT or anything else instead of GET for any of these endpoitns,
+%- we'll receive an error.
+%-
+%- Let's make a POST request.
+%-
+%- To do that, we also need to pass into the route decorate the keyword argument
+%- methods=['POST'].
+%- This tells flask to create an endpoint whose only valid methods are POST.
+%- If we make a GET request on this endpoint, we'll get an error.
+%-
+%- We're creating the POST endpoint 127.0.0.1:5000/create/<name>.
+%- Let's also create a dictionary called database that stores an array of strings in the
+%- names property.
+%- When the client calls the POST /create/John, we'll store that name ('John') into the
+%- dictionary and then return a success message in the body.
+%-
+%- This is an appropriate use of POST because we change the state in the backend.
+  An endpoint that modifies persistent data: \\
+  \vspace*{1em}
+
+  \codelisting[basicstyle=\normalsize]{8}{8}
+  \codelisting[basicstyle=\normalsize]{44}{47}
+\end{frame}
+
+%- ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+%- Now we have persistent data.
+%- So, let's create another GET endpoint to retrieve the names
+%- store in this dictionary.
+%-
+%- Let's go back to our browser and request this GET endpoint.
+%- We should get back an empty array, because we haven't stored any names yet.
+  Retrieving the persistent data: \\
+  \vspace*{1em}
+
+  \codelisting[basicstyle=\large]{50}{52}
+\end{frame}
+
+% -----------------------------------------------
+
+\end{document}

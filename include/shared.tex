@@ -1,9 +1,17 @@
 % Default listing style
 \lstdefinestyle{default}{%
-  basicstyle=\scriptsize,
+  basicstyle=\Large,
   showspaces=false,
   showstringspaces=false,
   showtabs=false,
   tabsize=1
 }
 \lstset{style=default}
+
+\newcommand{\codelisting}[3][]{%
+  \lstinputlisting[%
+    language=Python,firstline=#2,lastline=#3,#1%,
+  ]{\codefile}%
+}
+
+\newcommand{\urlendpoint}[1]{127.0.0.1:5000/#1}
