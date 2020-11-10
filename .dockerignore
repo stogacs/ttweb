@@ -3,13 +3,7 @@
 !include
 !sections
 !index.tex
-!references.bib
 
 !sty
 !latexmkrc
-
-!renv/activate.R
-!renv/settings.dcf
-!renv.lock
-!.Rprofile
 !packages.txt

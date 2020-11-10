@@ -6,7 +6,7 @@ DOCKER ?= docker
 
 .PHONY : index index-docker create-target
 
-index : create-target index.tex $(wildcard sections/*) references.bib
+index : create-target index.tex $(wildcard sections/*)
 	$(LATEXMK)
 
 index-docker : create-target index.tex $(wildcard sections/*) references.bib
