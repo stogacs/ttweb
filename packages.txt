@@ -6,6 +6,7 @@ csquotes
 enumitem
 fira
 grfext
+hyperref
 import
 listings
 pgfopts
