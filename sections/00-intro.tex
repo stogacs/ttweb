@@ -190,6 +190,7 @@
 %-
 %- Let's say your server maintains a database of users.
 %- A POST request might cause the backend to create a user with the specified properties.
+%- That's a state change; the state of our database is now different than what it was before.
 %-
 %- Where do we specify those properties? In the request body.
 %- So the request can also have a body just like the response.
