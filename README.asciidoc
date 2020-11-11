@@ -9,6 +9,8 @@ Requirements for main document (if not using Docker)
 * Python 3.6+
 ** Alternatively, a TeX installation (see link:packages.txt[`packages.txt`]
    for list of extra required packages)
+* Fira Code font (see
+  https://github.com/tonsky/FiraCode/wiki/Installing[install instructions])
 
 Other targets (see Makefile for details):
 
