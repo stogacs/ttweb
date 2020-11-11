@@ -5,11 +5,11 @@ from flask import make_response
 app = Flask(__name__)
 
 
-database = {'names': []}
+database = {'names': []}  # type: ignore
 
 
 def run():
-    app.run(debug=True)
+    app.run(debug=True)  # nosec
 
 
 @app.route('/')
