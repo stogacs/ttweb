@@ -41,7 +41,7 @@
 %- Now, let's create a new Python file called app.py.
 %- We'll import flask and create a new app.
   \codelisting{1}{1}
-  \codelisting{5}{5}
+  \codelisting{6}{6}
 \end{frame}
 
 %- ---------------------------
@@ -84,7 +84,7 @@ app.run()
 %- The page should now show that string.
   Make an endpoint for \texttt{\urlendpoint{}}:
   \vspace*{1em}
-  \codelisting{15}{17}
+  \codelisting{16}{18}
 \end{frame}
 
 %- ---------------------------
@@ -98,7 +98,7 @@ app.run()
 %- We should see the string 'Hello World!'.
   Make an endpoint for \texttt{\urlendpoint{hello}}:
   \vspace*{1em}
-  \codelisting{20}{22}
+  \codelisting{21}{23}
 \end{frame}
 
 %- ---------------------------
@@ -112,7 +112,7 @@ app.run()
 %- So if we go to 127.0.0.1:5000/hello/John, we should get back 'Hello John!'.
   Make an endpoint for \texttt{\urlendpoint{hello/<name>}}:
   \vspace*{1em}
-  \codelisting{25}{27}
+  \codelisting{26}{28}
 \end{frame}
 
 %- ---------------------------
@@ -132,7 +132,7 @@ app.run()
 %- We should get back in the body of the response a JSON object with the property name set
 %- to John.
   \codelisting{3}{3}
-  \codelisting{30}{35}
+  \codelisting{31}{36}
 \end{frame}
 
 %- ---------------------------
@@ -141,7 +141,7 @@ app.run()
 %- This does pretty much the same thing as the last endpoint we created, except the property
 %- is called 'string' instead of 'name'.
   \codelisting{2}{2}
-  \codelisting{38}{41}
+  \codelisting{39}{42}
 \end{frame}
 
 %- ---------------------------
@@ -158,18 +158,25 @@ app.run()
 %- This tells flask to create an endpoint whose only valid methods are POST.
 %- If we make a GET request on this endpoint, we'll get an error.
 %-
-%- We're creating the POST endpoint 127.0.0.1:5000/create/<name>.
+%- We're creating the POST endpoint 127.0.0.1:5000/create.
 %- Let's also create a dictionary called database that stores an array of strings in the
 %- names property.
-%- When the client calls the POST /create/John, we'll store that name ('John') into the
-%- dictionary and then return a success message in the body.
+%-
+%- When the client calls the POST /create, we expect the request body to contain a JSON
+%- string with the property 'name'.
+%- To access the request data, we have to import request from flask.
+%- We'll get the JSON data from the request body as a dictionary, and then get the 'name'
+%- property.
+%- We'll store that name into our app's dictionary and then return a success message in the
+%- body.
 %-
 %- This is an appropriate use of POST because we change the state in the backend.
   An endpoint that modifies persistent data: \\
   \vspace*{1em}
 
-  \codelisting[basicstyle=\ttfamily\normalsize]{8}{8}
-  \codelisting[basicstyle=\ttfamily\normalsize]{44}{47}
+  \codelisting[basicstyle=\ttfamily\normalsize]{4}{4}
+  \codelisting[basicstyle=\ttfamily\normalsize]{9}{9}
+  \codelisting[basicstyle=\ttfamily\normalsize]{45}{49}
 \end{frame}
 
 %- ---------------------------
@@ -189,7 +196,7 @@ app.run()
   Retrieving the persistent data: \\
   \vspace*{1em}
 
-  \codelisting[basicstyle=\ttfamily\large]{50}{52}
+  \codelisting[basicstyle=\ttfamily\large]{52}{54}
 \end{frame}
 
 %- ---------------------------
@@ -197,13 +204,24 @@ app.run()
 %- Copy the following code into your console and press enter.
 %- This'll make a POST request to our endpoint and print the response body.
 %-
+%- Our POST request has a body of JSON.
+%- That JSON object has one property, 'name', which we've set to 'John'.
+%- Notice how when we send JSON in the body, we also set two headers: 'Accept' and
+%- 'Content-Type'.
+%- These tell the server that our body is in JSON form.
+%-
 %- Then reload the page to make a GET request again and see the updated list of names.
   To make the POST request: \\
   \vspace*{1em}
 
-  \begin{lstlisting}[language=ES6,basicstyle=\ttfamily\normalsize]
-fetch("http://127.0.0.1:5000/create/John",
-      { method: "POST" })
+  \begin{lstlisting}[language=ES6,basicstyle=\ttfamily\footnotesize]
+fetch("http://127.0.0.1:5000/create",
+      { method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: "John" }) })
   .then(r => r.json())
   .then(json => console.log(json));
   \end{lstlisting}
@@ -216,7 +234,7 @@ fetch("http://127.0.0.1:5000/create/John",
 %- Now if we go to an invalid endpoint, it'll give us a response with code 404 and the body
 %- 'Page not found!'.
   A custom \texttt{404} handler:
-  \codelisting{55}{57}
+  \codelisting{57}{59}
 \end{frame}
 
 %- ---------------------------

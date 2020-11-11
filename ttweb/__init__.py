@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import jsonify
 from flask import make_response
+from flask import request
 
 app = Flask(__name__)
 
@@ -41,8 +42,9 @@ def jsonify_route(string):
     return jsonify(data)
 
 
-@app.route('/create/<name>', methods=['POST'])
-def post_name(name):
+@app.route('/create', methods=['POST'])
+def post_name():
+    name = request.json['name']
     database['names'].append(name)
     return jsonify({'message': 'success'})
 
